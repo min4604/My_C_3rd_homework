@@ -2,24 +2,27 @@
 #include<stdlib.h>
 #include<math.h>
 
-double r[] = { 0.1,0.105,0.11,0.115,0.12 };
-double p = 5000;
-int year = 15;
-double ans;
-int i, j;
+long factorial(long number);
+
 int main(void)
 {
-	for (i = 0; i < 5; i++)
+	int i;
+	for (i = 0; i <= 10; i++)
 	{
-		printf("rate is%.1f%s\n", r[i] * 100,"%");
-		printf("year\tAmount on deposit\n");
-		for (j = 1; j <= year; j++)
-		{
-			ans = p * pow(1.0 + r[i], j);
-			printf("%4d%21.2f\n", j, ans);
-		}
+		printf("%d! =%1d\n", i, factorial(i));
 	}
-
 	system("pause");
 	return 0;
+}
+
+long factorial(long number)
+{
+	if (number <= 1)
+	{
+		return 1;
+	}
+	else
+	{
+		return (number*factorial(number - 1));
+	}
 }

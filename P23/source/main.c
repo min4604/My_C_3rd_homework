@@ -1,26 +1,74 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 
-int i, j;
-int ii, jj;
+enum Status{CONTINUE,WON,LOST};
+int rollDice(void);
+
 int main(void)
 {
-	printf("Enter iength:");
-	scanf_s("%d", &ii);
-	printf("Enter breadth:");
-	scanf_s("%d", &jj);
-	for (i = 0; i < ii; i++)
+	int sum;
+	int myPoint;
+
+	enum Status gameStatus;
+
+	srand(time(NULL));
+	sum = rollDice();
+	
+	switch (sum)
 	{
-		for (j = 0; j < jj; j++)
+		case 7:
+		case 11:
+			gameStatus = WON;
+			break;
+		case 2:
+		case 3:
+		case 12:
+			gameStatus = LOST;
+			break;
+		default:
+			gameStatus = CONTINUE;
+			myPoint = sum;
+			printf("Point is %d\n", myPoint);
+			break;
+	}
+
+	while (gameStatus == CONTINUE)
+	{
+		sum = rollDice();
+
+		if (sum == myPoint)
 		{
-			if (i == 0 || i == (ii-1) || j == 0 || j == (jj-1))
-				printf("+");
-			else
-				printf(" ");
+			gameStatus = WON;
 		}
-		printf("\n");
+		else if(sum ==7)
+		{
+			gameStatus = LOST;
+		}
+	}
+
+	if (gameStatus == WON)
+	{
+		printf("Player wins\n");
+	}
+	else
+	{
+		printf("Player LOST\n");
 	}
 
 	system("pause");
 	return 0;
+}
+
+int rollDice(void)
+{
+	int die1;
+	int die2;
+	int workSum;
+
+	die1 = 1 + (rand() % 6);
+	die2 = 1 + (rand() % 6);
+	workSum = die1 + die2;
+	printf("player rolled %d + %d = %d\n", die1, die2, workSum);
+	return workSum;
 }
